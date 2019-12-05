@@ -1,0 +1,10 @@
+---
+
+- name: Manage records
+  include_tasks: record.yaml
+  when: >
+    'type' in record and
+    record['type'] in ['A', 'AAAA', 'CNAME', 'PTR']
+  loop: "{{ win_dns_records | ammend_records(win_dns_autoptr) }}"
+  loop_control:
+    loop_var: record

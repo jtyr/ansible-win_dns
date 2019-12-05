@@ -1,0 +1,34 @@
+---
+
+# Zone name (must be provided by the user)
+win_dns_zone: null
+
+# Name in the zone (must be provided by the user)
+win_dns_name: null
+
+# Default record type (A, AAAA, CNAME, PTR)
+win_dns_type: null
+
+# Value of the specific type (must be provided by the user)
+win_dns_value: null
+
+# TTL (optional)
+win_dns_ttl: null
+
+# Default TTL
+win_dns_ttl_default: 3600
+
+# Default state
+win_dns_state: present
+
+# Whether to add PTR record automatically for every A record
+win_dns_autoptr: no
+
+# Final list of records
+win_dns_records:
+  - name: "{{ win_dns_name }}"
+    type: "{{ win_dns_type }}"
+    value: "{{ win_dns_value }}"
+    ttl: "{{ win_dns_ttl }}"
+    zone: "{{ win_dns_zone }}"
+    state: "{{ win_dns_state }}"
