@@ -9,7 +9,7 @@
   tags:
     - win_dns_assert
 
-- name: Check if zone exists
+- name: Check if zone {{ record.zone }} exists
   win_shell: >
     dnscmd . /enumzones |
     Select-String -pattern '^ {{ record.zone }} .*$' -quiet
@@ -19,7 +19,7 @@
   register: win_dns_zone_exists
   changed_when: no
 
-- name: Create new zone
+- name: Create new zone {{ record.zone }}
   win_shell: >
     dnscmd . /zoneadd {{ record.zone }} /primary
   when: >
