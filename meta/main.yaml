@@ -1,0 +1,14 @@
+---
+
+galaxy_info:
+  author: Jiri Tyr
+  description: Role which helps to manage DNS records on Windows DNS.
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: Windows
+      versions:
+        - all
+  galaxy_tags:
+    - system
+dependencies: []
