@@ -29,14 +29,14 @@
     ) and
     win_dns_zone_exists.stdout | trim != 'True'
 
-- name: Check if {{ record.type }} record exists
+- name: Check if {{ record.type }} record {{ record.value if record.type[0] == 'A' else record.name }} exists
   win_shell: >
     dnscmd /enumrecords {{ record.zone }} . |
     Select-String -pattern '^{{ record.name }}\s+{{ record.ttl | default(win_dns_ttl_default, True) }}\s+{{ record.type }}\s+{{ record.value }}$' -quiet
   register: win_dns_record_exists
   changed_when: no
 
-- name: Create new {{ record.type }} record
+- name: Create new {{ record.type }} record {{ record.value if record.type[0] == 'A' else record.name }}
   win_shell: >
     dnscmd . /recordadd {{ record.zone }} {{ record.name }} {{ (record.ttl | default(win_dns_ttl_default, True)) }} {{ record.type }} {{ record.value }}
   when: >
@@ -45,7 +45,7 @@
       record['state'] == 'present'
     )
 
-- name: Delete {{ record.type }} record
+- name: Delete {{ record.type }} record {{ record.value if record.type[0] == 'A' else record.name }}
   win_shell: >
     dnscmd . /recorddelete {{ record.zone }} {{ record.name }} {{ record.type }} {{ record.value }} /f
   when: >
